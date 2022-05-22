@@ -16,10 +16,29 @@ export default async function handler(req, res) {
 
     }
     if (req.method === 'PUT') {
+        const{ trip, name, date, amount, currency } = req.body
+
+        await prisma.expense.update({
+            data: {
+                trip,
+                name,
+                date,
+                amount,
+                currency,
+            },
+            where: {
+                id: parseInt(req.query.id),
+            },
+        })
+
 
     }
     if (req.method === 'DELETE') {
-
+        await prisma.expense.delete({
+            where: {
+              id: parseInt(req.query.id),
+            },
+          })
     }
 
 
