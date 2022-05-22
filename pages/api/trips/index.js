@@ -4,9 +4,18 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
 
       const trips = await prisma.trip.findMany()
-      res.status(200).json(trips)
 
-      return
+      await Promise.all(
+        trips.map(async(trip)=> {
+          trip.expenses = await prisma.expense.findMany({
+            where: {
+              trip: trip.id,
+            },
+          })
+        })
+      )
+      return res.status(200).json(trips)
+
     
   }
 
