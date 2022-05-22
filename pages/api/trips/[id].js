@@ -9,6 +9,11 @@ export default async function handler(req, res) {
             },
         })
 
+        if (!trip) {
+            return res.status(404).json({ message: 'Not Found' })
+          }
+          res.status(200).json(trip)
+
     }
     if (req.method === 'PUT') {
 
@@ -16,5 +21,9 @@ export default async function handler(req, res) {
     if (req.method === 'DELETE') {
 
     }
+
+
+    
+    
 
 }
